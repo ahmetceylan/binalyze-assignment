@@ -7,51 +7,49 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { TodoGroupsService } from './todo-groups.service';
 import { CreateTodoGroupDto } from './dtos/create-todo-group.dto';
 import { UpdateTodoGroupDto } from './dtos/update-todo-group.dto';
 import { User } from 'src/users/entities/user.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 
 @Controller('todo-groups')
+@UseGuards(JwtAuthGuard)
 export class TodoGroupsController {
   constructor(private readonly todoGroupsService: TodoGroupsService) {}
 
   @Post()
-  create(@Body() createTodoGroupDto: CreateTodoGroupDto) {
-    // TODO: Get user from request
-    const mockUser = { id: 1, email: 'test@test.com' } as User;
-    return this.todoGroupsService.create(createTodoGroupDto, mockUser);
+  create(
+    @Body() createTodoGroupDto: CreateTodoGroupDto,
+    @GetUser() user: User,
+  ) {
+    return this.todoGroupsService.create(createTodoGroupDto, user);
   }
 
   @Get()
-  findAll() {
-    // TODO: Get user from request
-    const mockUserId = 1;
-    return this.todoGroupsService.findAll(mockUserId);
+  findAll(@GetUser() user: User) {
+    return this.todoGroupsService.findAll(user.id);
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    // TODO: Get user from request
-    const mockUserId = 1;
-    return this.todoGroupsService.findOne(id, mockUserId);
+  findOne(@Param('id', ParseIntPipe) id: number, @GetUser() user: User) {
+    return this.todoGroupsService.findOne(id, user.id);
   }
 
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateTodoGroupDto: UpdateTodoGroupDto,
+    @GetUser() user: User,
   ) {
-    // TODO: Get user from request
-    const mockUserId = 1;
-    return this.todoGroupsService.update(id, updateTodoGroupDto, mockUserId);
+    return this.todoGroupsService.update(id, updateTodoGroupDto, user.id);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    // TODO: Get user from request
-    const mockUserId = 1;
-    return this.todoGroupsService.remove(id, mockUserId);
+  remove(@Param('id', ParseIntPipe) id: number, @GetUser() user: User) {
+    return this.todoGroupsService.remove(id, user.id);
   }
 }
