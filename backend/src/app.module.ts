@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { TodoItemsModule } from './todo-items/todo-items.module';
 import { TodoGroupsModule } from './todo-groups/todo-groups.module';
 import databaseConfig from './config/database.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import databaseConfig from './config/database.config';
       load: [databaseConfig],
     }),
     DatabaseModule,
+    AuthModule,
     UsersModule,
     TodoItemsModule,
     TodoGroupsModule,

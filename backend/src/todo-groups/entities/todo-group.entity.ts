@@ -5,8 +5,8 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { User } from '../users/user.entity';
-import { TodoItem } from '../todo-items/todo-item.entity';
+import { User } from '../../users/entities/user.entity';
+import { TodoItem } from '../../todo-items/entities/todo-item.entity';
 
 @Entity('todoGroups')
 export class TodoGroup {

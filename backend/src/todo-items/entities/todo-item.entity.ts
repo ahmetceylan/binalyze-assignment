@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { TodoGroup } from '../todo-groups/todo-group.entity';
-import { User } from '../users/user.entity';
+import { TodoGroup } from '../../todo-groups/entities/todo-group.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('todoItems')
 export class TodoItem {
