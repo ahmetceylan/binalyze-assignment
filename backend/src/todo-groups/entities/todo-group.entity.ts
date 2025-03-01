@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { TodoItem } from '../../todo-items/entities/todo-item.entity';
@@ -24,4 +25,7 @@ export class TodoGroup {
 
   @OneToMany(() => TodoItem, (todoItem) => todoItem.group)
   todoItems: TodoItem[];
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

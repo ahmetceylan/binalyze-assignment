@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  UpdateDateColumn,
+} from 'typeorm';
 import { TodoGroup } from '../../todo-groups/entities/todo-group.entity';
 import { User } from '../../users/entities/user.entity';
 
@@ -33,4 +39,7 @@ export class TodoItem {
 
   @Column({ type: 'timestamp', nullable: true })
   completed_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

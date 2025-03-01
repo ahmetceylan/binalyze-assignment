@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { TodoGroup } from '../../todo-groups/entities/todo-group.entity';
 import { TodoItem } from '../../todo-items/entities/todo-item.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -10,6 +11,8 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  // (ClassSerializerInterceptor + @Exclude()) to exclude password from response
+  @Exclude()
   @Column()
   password: string;
 
