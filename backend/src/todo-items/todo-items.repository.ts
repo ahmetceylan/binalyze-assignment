@@ -42,13 +42,16 @@ export class TodoItemsRepository {
 
   async findAll(
     userId: number,
-    completed: boolean,
     filters?: TodoItemFiltersDto,
   ): Promise<TodoItem[]> {
+    console.log('AHMET : ', filters);
     const where: FindOptionsWhere<TodoItem> = {
       user: { id: userId },
-      completed,
     };
+
+    if (filters?.completed) {
+      where.completed = filters.completed;
+    }
 
     if (filters?.groupId) {
       where.group = { id: filters.groupId };

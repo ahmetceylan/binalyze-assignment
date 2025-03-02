@@ -8,5 +8,5 @@ export default registerAs('database', () => ({
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   synchronize: process.env.NODE_ENV !== 'production',
-  logging: process.env.NODE_ENV !== 'production',
+  logging: false, //process.env.NODE_ENV !== 'production',
 }));

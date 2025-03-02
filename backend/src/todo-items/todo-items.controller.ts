@@ -35,12 +35,8 @@ export class TodoItemsController {
 
   @ApiOperation({ summary: 'Find all Todo Items' })
   @Get()
-  findAll(
-    @Query('completed', ParseBoolPipe) completed: boolean,
-    @Query() filters: TodoItemFiltersDto,
-    @GetUser() user: User,
-  ) {
-    return this.todoItemsService.findAll(user.id, completed, filters);
+  findAll(@Query() filters: TodoItemFiltersDto, @GetUser() user: User) {
+    return this.todoItemsService.findAll(user.id, filters);
   }
 
   @ApiOperation({ summary: 'Find Todo Item by id' })

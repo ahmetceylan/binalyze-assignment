@@ -16,12 +16,8 @@ export class TodoItemsService {
     return await this.todoItemsRepository.create(createTodoItemDto, user);
   }
 
-  async findAll(
-    userId: number,
-    completed: boolean,
-    filters?: TodoItemFiltersDto,
-  ) {
-    return await this.todoItemsRepository.findAll(userId, completed, filters);
+  async findAll(userId: number, filters?: TodoItemFiltersDto) {
+    return await this.todoItemsRepository.findAll(userId, filters);
   }
 
   async findOne(id: number, userId: number) {
