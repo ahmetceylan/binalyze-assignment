@@ -14,6 +14,7 @@ export class TodoGroup {
   @PrimaryGeneratedColumn()
   id: number;
 
+  //TODO should it be unique ? no spec in assignment
   @Column()
   name: string;
 
@@ -23,7 +24,9 @@ export class TodoGroup {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @OneToMany(() => TodoItem, (todoItem) => todoItem.group)
+  @OneToMany(() => TodoItem, (todoItem) => todoItem.group, {
+    onDelete: 'CASCADE',
+  })
   todoItems: TodoItem[];
 
   @UpdateDateColumn()

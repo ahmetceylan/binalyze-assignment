@@ -28,7 +28,9 @@ export class TodoItem {
   @Column({ default: false })
   completed: boolean;
 
-  @ManyToOne(() => TodoGroup, (todoGroup) => todoGroup.todoItems)
+  @ManyToOne(() => TodoGroup, (todoGroup) => todoGroup.todoItems, {
+    onDelete: 'CASCADE',
+  })
   group: TodoGroup;
 
   @ManyToOne(() => User, (user) => user.todoItems)

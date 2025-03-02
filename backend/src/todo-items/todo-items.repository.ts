@@ -49,7 +49,7 @@ export class TodoItemsRepository {
       user: { id: userId },
     };
 
-    if (filters?.completed) {
+    if (filters?.completed !== undefined && filters?.completed !== null) {
       where.completed = filters.completed;
     }
 

@@ -29,6 +29,6 @@ export class TodoItemFiltersDto {
   @IsOptional()
   @IsBoolean()
   @Type(() => Boolean)
-  @Transform(({ value }) => (value === 'true' ? true : false))
+  @Transform(({ value }) => (value === true || value === 'true' ? true : false))
   completed?: boolean;
 }

@@ -19,7 +19,6 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // remove undefined fields
-      transform: true,
       forbidNonWhitelisted: true, // return errır for undefined fiedls
     }),
   );
