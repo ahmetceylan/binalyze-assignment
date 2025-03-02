@@ -43,14 +43,18 @@ export const useTodoStore = defineStore('todo', {
         await api.patch(`/todo-items/${todo.id}/toggle-complete`)
 
         if (todo.completed) {
-          this.activeTodos = this.activeTodos.filter((t) => t.id !== todo.id)
-        } else {
+          // Completed -> Active
           this.completedTodos = this.completedTodos.filter((t) => t.id !== todo.id)
+          this.activeTodos.push({ ...todo, completed: false })
+        } else {
+          // Active -> Completed
+          this.activeTodos = this.activeTodos.filter((t) => t.id !== todo.id)
+          this.completedTodos.push({ ...todo, completed: true })
         }
-
-        await this.fetchTodos(!todo.completed)
       } catch (error) {
         console.error('Error toggling todo:', error)
+        // Hata durumunda state'i geri al
+        await this.fetchTodos(todo.completed)
       }
     },
   },

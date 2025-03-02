@@ -1,33 +1,40 @@
 <template>
-  <v-card class="mx-auto my-3" elevation="16" max-width="450">
+  <v-card class="mx-auto my-3" elevation="2" max-width="800px">
     <v-card-text>
-      <div class="d-flex">
-        <div class="flex-grow-1">
-          <div class="d-flex">
-            <span :class="{ 'text-decoration-line-through': todo.completed }">
+      <div class="d-flex flex-column">
+        <div class="d-flex align-center mb-3">
+          <div class="flex-grow-1">
+            <span class="text-h6" :class="{ 'text-decoration-line-through': todo.completed }">
               {{ todo.title }}
             </span>
-
-            <v-chip size="small" :color="getPriorityColor">
-              {{ todo.priority }}
-            </v-chip>
           </div>
-
-          <div class="text-caption text-grey">
-            {{ formatDate(todo.due_date) }} - {{ todo.group?.name }}
-          </div>
+          <v-chip size="small" :color="getPriorityColor" class="ml-2">
+            Priority: {{ todo.priority }}
+          </v-chip>
         </div>
 
-        <div class="ml-2">
-          <v-switch
-            v-model="localCompleted"
-            color="indigo"
-            :label="localCompleted ? 'Mark as Not Completed' : 'Mark as Completed'"
-            hide-details
-            @change="handleToggleComplete"
-          ></v-switch>
-          <v-btn size="small" text="Edit" @click="$emit('edit', todo)" />
-          <v-btn size="small" text="Delete" color="error" @click="$emit('delete', todo.id)" />
+        <div class="d-flex align-center mb-3">
+          <v-chip size="small" color="primary" class="mr-2" v-if="todo.group">
+            Group: {{ todo.group.name }}
+          </v-chip>
+          <span class="text-caption">Due date: {{ formatDate(todo.due_date) }}</span>
+        </div>
+
+        <!-- Butonlar -->
+        <div class="d-flex flex-column gap-2">
+          <v-btn
+            block
+            :color="todo.completed ? 'warning' : 'success'"
+            @click="$emit('toggle-complete', todo.id)"
+          >
+            {{ todo.completed ? 'Re-activate' : 'Mark as completed' }}
+          </v-btn>
+
+          <v-btn v-if="!todo.completed" block color="primary" @click="$emit('edit', todo)">
+            Update
+          </v-btn>
+
+          <v-btn block color="error" @click="$emit('delete', todo.id)"> Delete </v-btn>
         </div>
       </div>
     </v-card-text>
@@ -74,15 +81,15 @@ const getPriorityColor = computed(() => {
 })
 
 const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('tr-TR')
+  console.log('AHMET date', date)
+  return new Date(date).toLocaleString('tr-TR', { timeZone: 'UTC' })
 }
 
 const handleToggleComplete = async () => {
   try {
     await store.toggleComplete(props.todo)
   } catch (error) {
-    // Hata durumunda switch'i eski haline getir
-    localCompleted.value = !localCompleted.value
+    console.error('Error toggling todo completion:', error)
   }
 }
 </script>

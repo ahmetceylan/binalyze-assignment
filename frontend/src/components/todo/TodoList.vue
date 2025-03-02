@@ -30,7 +30,7 @@
 
           <v-text-field
             v-model="filters.due_date"
-            label="Son Tarih"
+            label="Due date"
             type="date"
             hide-details
             class="mr-2"
@@ -68,6 +68,7 @@ import TodoItem from './TodoItem.vue'
 
 //TODO add pagination support
 //TODO move interfaces to a common folder
+//TODO send a request for every filter operation
 interface Todo {
   id: number
   title: string
@@ -116,6 +117,7 @@ const filteredTodos = computed(() => {
     }
     if (filters.value.due_date) {
       const todoDate = new Date(todo.due_date).toISOString().split('T')[0]
+
       if (todoDate !== filters.value.due_date) {
         return false
       }
