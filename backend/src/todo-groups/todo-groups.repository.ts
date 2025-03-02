@@ -38,6 +38,27 @@ export class TodoGroupsRepository {
     });
   }
 
+  async findAllWithCount(userId: number): Promise<any[]> {
+    return await this.todoGroupsRepository
+      .createQueryBuilder('group')
+      .leftJoinAndSelect('group.todoItems', 'item')
+      .select(['group', 'COUNT(item.id) AS todoCount'])
+      .where('group.user.id = :userId', { userId })
+      .groupBy('group.id')
+      .getRawMany();
+  }
+
+  async findOneWithCount(id: number, userId: number): Promise<any> {
+    return await this.todoGroupsRepository
+      .createQueryBuilder('group')
+      .leftJoinAndSelect('group.todoItems', 'item')
+      .select(['group', 'COUNT(item.id) AS todoCount'])
+      .where('group.id = :id', { id })
+      .andWhere('group.user.id = :userId', { userId })
+      .groupBy('group.id')
+      .getRawOne();
+  }
+
   async update(
     id: number,
     updateTodoGroupDto: UpdateTodoGroupDto,

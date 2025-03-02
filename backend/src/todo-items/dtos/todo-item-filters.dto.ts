@@ -28,7 +28,6 @@ export class TodoItemFiltersDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
-  @Type(() => Boolean)
   @Transform(({ value }) => (value === true || value === 'true' ? true : false))
   completed?: boolean;
 }

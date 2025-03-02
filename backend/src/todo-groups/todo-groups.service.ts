@@ -16,11 +16,11 @@ export class TodoGroupsService {
   }
 
   async findAll(userId: number) {
-    return await this.todoGroupsRepository.findAll(userId);
+    return await this.todoGroupsRepository.findAllWithCount(userId);
   }
 
   async findOne(id: number, userId: number) {
-    const group = await this.todoGroupsRepository.findOne(id, userId);
+    const group = await this.todoGroupsRepository.findOneWithCount(id, userId);
     if (!group) {
       throw new NotFoundException(`Todo group with ID ${id} not found`);
     }

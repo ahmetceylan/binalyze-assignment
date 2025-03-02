@@ -17,13 +17,13 @@
     </div>
 
     <template v-else>
-      <v-card v-for="group in groups" :key="group.id" class="my-3">
+      <v-card v-for="group in groups" :key="group.group_id" class="my-3">
         <v-card-text>
           <div class="d-flex align-center">
             <div class="flex-grow-1">
-              <div class="text-h6">{{ group.name }}</div>
+              <div class="text-h6">{{ group.group_name }}</div>
               <div class="text-caption text-grey">
-                {{ group.todoCount || 0 }} item created in this group
+                {{ group.todocount || 0 }} item created in this group
               </div>
             </div>
             <div>
@@ -32,7 +32,7 @@
                 size="small"
                 text="Sil"
                 color="error"
-                @click="handleDelete(group.id)"
+                @click="handleDelete(group.group_id)"
                 :disabled="group.todoCount > 0"
               />
             </div>
@@ -110,7 +110,7 @@ const fetchGroups = async () => {
 const showGroupForm = (group: Group | null = null) => {
   selectedGroup.value = group
   if (group) {
-    formData.name = group.name
+    formData.name = group.group_name
   } else {
     formData.name = ''
   }
@@ -129,7 +129,7 @@ const handleSubmit = async () => {
   formLoading.value = true
   try {
     if (selectedGroup.value) {
-      await api.patch(`/todo-groups/${selectedGroup.value.id}`, formData)
+      await api.patch(`/todo-groups/${selectedGroup.value.group_id}`, formData)
     } else {
       await api.post('/todo-groups', formData)
     }
