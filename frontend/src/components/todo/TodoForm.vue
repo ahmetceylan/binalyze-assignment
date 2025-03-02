@@ -101,7 +101,11 @@ const handleSubmit = async () => {
 
   loading.value = true
   try {
-    emit('save', formData)
+    const todoData = {
+      ...formData,
+      id: props.todo?.id,
+    }
+    emit('save', todoData)
     closeDialog()
   } finally {
     loading.value = false

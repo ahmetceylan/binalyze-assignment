@@ -58,7 +58,8 @@ const showTodoForm = (todo = null) => {
 const handleSave = async (todoData) => {
   try {
     if (todoData.id) {
-      await api.patch(`/todo-items/${todoData.id}`, todoData)
+      const { id, ...formData } = todoData
+      await api.patch(`/todo-items/${id}`, formData)
     } else {
       await api.post('/todo-items', todoData)
     }

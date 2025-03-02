@@ -58,6 +58,8 @@
 import { ref, computed } from 'vue'
 import TodoItem from './TodoItem.vue'
 
+//TODO add pagination support
+//TODO move interfaces to a common folder
 interface Todo {
   id: number
   title: string
