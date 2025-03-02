@@ -2,9 +2,9 @@
   <div>
     <h1>Aktif Görevler</h1>
     <todo-list
-      :todos="todos"
-      :groups="groups"
-      :loading="loading"
+      :todos="store.activeTodos"
+      :groups="groupStore.mappedGroups"
+      :loading="store.loading"
       @add="showTodoForm()"
       @edit="showTodoForm($event)"
       @delete="handleDelete"
@@ -14,7 +14,7 @@
     <todo-form
       v-if="showForm"
       :todo="selectedTodo"
-      :groups="groups"
+      :groups="groupStore.mappedGroups"
       @save="handleSave"
       @close="showForm = false"
     ></todo-form>
@@ -26,26 +26,25 @@ import { ref, onMounted } from 'vue'
 import TodoList from '@/components/todo/TodoList.vue'
 import TodoForm from '@/components/todo/TodoForm.vue'
 import api from '@/services/api'
+import { useTodoStore } from '@/stores/todo'
+import { useGroupStore } from '@/stores/group'
 
-const todos = ref([])
-const groups = ref([])
-const loading = ref(false)
+const store = useTodoStore()
+const groupStore = useGroupStore()
 const showForm = ref(false)
 const selectedTodo = ref(null)
 
 const fetchData = async () => {
-  loading.value = true
   try {
     const [todosResponse, groupsResponse] = await Promise.all([
       api.get('/todo-items?completed=false'),
       api.get('/todo-groups'),
     ])
-    todos.value = todosResponse.data
-    groups.value = groupsResponse.data
+    store.activeTodos = todosResponse.data
+
+    groupStore.groups = groupsResponse.data
   } catch (error) {
     console.error('Eror while loading todo list and groups:', error)
-  } finally {
-    loading.value = false
   }
 }
 
@@ -88,5 +87,8 @@ const handleToggleComplete = async (id) => {
   }
 }
 
-onMounted(fetchData)
+onMounted(() => {
+  store.fetchTodos(false)
+  groupStore.fetchGroups()
+})
 </script>

@@ -2,9 +2,9 @@
   <div>
     <h1>Tamamlanan Görevler</h1>
     <todo-list
-      :todos="todos"
-      :groups="groups"
-      :loading="loading"
+      :todos="store.completedTodos"
+      :groups="groupStore.mappedGroups"
+      :loading="store.loading"
       @delete="handleDelete"
       @toggle-complete="handleToggleComplete"
     ></todo-list>
@@ -12,34 +12,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useTodoStore } from '@/stores/todo'
+import { useGroupStore } from '@/stores/group'
 import TodoList from '@/components/todo/TodoList.vue'
 import api from '@/services/api'
 
-const todos = ref([])
-const groups = ref([])
-const loading = ref(false)
+const store = useTodoStore()
+const groupStore = useGroupStore()
 
 const fetchData = async () => {
-  loading.value = true
   try {
-    const [todosResponse, groupsResponse] = await Promise.all([
-      api.get('/todo-items?completed=true'),
-      api.get('/todo-groups'),
-    ])
-    todos.value = todosResponse.data
-    groups.value = groupsResponse.data
+    const [groupsResponse] = await Promise.all([api.get('/todo-groups')])
+    groupStore.groups = groupsResponse.data
   } catch (error) {
     console.error('Error while loading completed todo list:', error)
-  } finally {
-    loading.value = false
   }
 }
 
 const handleDelete = async (id) => {
   try {
     await api.delete(`/todo-items/${id}`)
-    fetchData()
+    store.fetchTodos(true)
   } catch (error) {
     console.error('Error while deleting todo item:', error)
   }
@@ -48,11 +42,14 @@ const handleDelete = async (id) => {
 const handleToggleComplete = async (id) => {
   try {
     await api.patch(`/todo-items/${id}/toggle-complete`)
-    fetchData()
+    store.fetchTodos(true)
   } catch (error) {
     console.error('Error while changing complete status of todo item:', error)
   }
 }
 
-onMounted(fetchData)
+onMounted(() => {
+  store.fetchTodos(true)
+  groupStore.fetchGroups()
+})
 </script>

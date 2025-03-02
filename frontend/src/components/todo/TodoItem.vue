@@ -20,10 +20,11 @@
 
         <div class="ml-2">
           <v-switch
-            v-model="todo.completed"
+            v-model="localCompleted"
             color="indigo"
-            :label="todo.completed ? 'Mark as Not Completed' : 'Mark as Completed'"
+            :label="localCompleted ? 'Mark as Not Completed' : 'Mark as Completed'"
             hide-details
+            @change="handleToggleComplete"
           ></v-switch>
           <v-btn size="small" text="Edit" @click="$emit('edit', todo)" />
           <v-btn size="small" text="Delete" color="error" @click="$emit('delete', todo.id)" />
@@ -34,7 +35,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
+import { useTodoStore } from '@/stores/todo'
 
 interface Todo {
   id: number
@@ -58,6 +60,9 @@ defineEmits<{
   (e: 'delete', id: number): void
 }>()
 
+const store = useTodoStore()
+const localCompleted = ref(props.todo.completed)
+
 const getPriorityColor = computed(() => {
   const colors = {
     low: 'green', // priority 1
@@ -70,5 +75,14 @@ const getPriorityColor = computed(() => {
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('tr-TR')
+}
+
+const handleToggleComplete = async () => {
+  try {
+    await store.toggleComplete(props.todo)
+  } catch (error) {
+    // Hata durumunda switch'i eski haline getir
+    localCompleted.value = !localCompleted.value
+  }
 }
 </script>

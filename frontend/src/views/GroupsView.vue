@@ -4,26 +4,26 @@
 
     <v-card>
       <v-card-text>
-        <v-btn color="primary" @click="showGroupForm()">New Group</v-btn>
+        <v-btn color="primary" @click="showGroupForm()">Yeni Grup</v-btn>
       </v-card-text>
     </v-card>
 
-    <div v-if="loading" class="d-flex justify-center">
+    <div v-if="store.loading" class="d-flex justify-center">
       <v-progress-circular indeterminate></v-progress-circular>
     </div>
 
-    <div v-else-if="!groups.length" class="text-center">
-      <div class="text-h3 text-grey">There is no group!</div>
+    <div v-else-if="!groupStore.groups?.length" class="text-center">
+      <div class="text-h3 text-grey">Henüz hiç grup oluşturulmamış!</div>
     </div>
 
     <template v-else>
-      <v-card v-for="group in groups" :key="group.group_id" class="my-3">
+      <v-card v-for="group in groupStore.groups" :key="group.group_id" class="my-3">
         <v-card-text>
           <div class="d-flex align-center">
             <div class="flex-grow-1">
               <div class="text-h6">{{ group.group_name }}</div>
               <div class="text-caption text-grey">
-                {{ group.todocount || 0 }} item created in this group
+                Bu grupta {{ group.todocount || 0 }} görev var
               </div>
             </div>
             <div>
@@ -32,8 +32,8 @@
                 size="small"
                 text="Sil"
                 color="error"
-                @click="handleDelete(group.group_id)"
-                :disabled="group.todoCount > 0"
+                @click="groupStore.deleteGroup(group.group_id)"
+                :disabled="group.todocount > 0"
               />
             </div>
           </div>
@@ -72,19 +72,14 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import api from '@/services/api'
+import { useGroupStore } from '@/stores/group'
+import { useTodoStore } from '@/stores/todo'
 
-interface Group {
-  id: number
-  name: string
-  todoCount?: number
-}
-
-const groups = ref<Group[]>([])
-const loading = ref(false)
+const store = useTodoStore()
+const groupStore = useGroupStore()
 const showForm = ref(false)
 const formLoading = ref(false)
-const selectedGroup = ref<Group | null>(null)
+const selectedGroup = ref(null)
 const form = ref(null)
 
 const formData = reactive({
@@ -95,19 +90,7 @@ const rules = {
   required: (v: any) => !!v || 'Bu alan zorunludur',
 }
 
-const fetchGroups = async () => {
-  loading.value = true
-  try {
-    const response = await api.get('/todo-groups')
-    groups.value = response.data
-  } catch (error) {
-    console.error('Error while loading groups:', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-const showGroupForm = (group: Group | null = null) => {
+const showGroupForm = (group = null) => {
   selectedGroup.value = group
   if (group) {
     formData.name = group.group_name
@@ -129,27 +112,18 @@ const handleSubmit = async () => {
   formLoading.value = true
   try {
     if (selectedGroup.value) {
-      await api.patch(`/todo-groups/${selectedGroup.value.group_id}`, formData)
+      await groupStore.updateGroup(selectedGroup.value.group_id, formData.name)
     } else {
-      await api.post('/todo-groups', formData)
+      await groupStore.createGroup(formData.name)
     }
-    fetchGroups()
     closeForm()
-  } catch (error) {
-    console.error('Error while updating group:', error)
   } finally {
     formLoading.value = false
   }
 }
 
-const handleDelete = async (id: number) => {
-  try {
-    await api.delete(`/todo-groups/${id}`)
-    fetchGroups()
-  } catch (error) {
-    console.error('Error while deleting group:', error)
-  }
-}
-
-onMounted(fetchGroups)
+onMounted(() => {
+  store.fetchTodos(false)
+  groupStore.fetchGroups()
+})
 </script>
