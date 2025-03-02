@@ -4144,6 +4144,11 @@ vue@^3.5.13:
     "@vue/server-renderer" "3.5.13"
     "@vue/shared" "3.5.13"
 
+vuetify@^3.7.14:
+  version "3.7.14"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.7.14.tgz#7d082cc90eef79cc17725a6983e3762b9041d0cd"
+  integrity sha512-L5oD0x3Wrp49Khp+16dRykAFUZq6WXqX7OHLTwXnyEliJ48ERC9WfEtN0YOuEIhor/b2IOZXl+11fs/m452/Lw==
+
 w3c-xmlserializer@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/w3c-xmlserializer/-/w3c-xmlserializer-5.0.0.tgz#f925ba26855158594d907313cedd1476c5967f6c"
