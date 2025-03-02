@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="mx-auto my-3" elevation="16" max-width="450">
     <v-card-text>
       <div class="d-flex">
         <div class="flex-grow-1">
@@ -23,7 +23,6 @@
             v-model="todo.completed"
             color="indigo"
             :label="todo.completed ? 'Mark as Not Completed' : 'Mark as Completed'"
-            value="indigo"
             hide-details
           ></v-switch>
           <v-btn size="small" text="Edit" @click="$emit('edit', todo)" />
