@@ -53,6 +53,8 @@ const password = ref('')
 const loading = ref(false)
 const isRegister = ref(false)
 
+// TODO: handle empty form submit, disable button
+// TODO: show api error message to the user
 const rules = {
   required: (v: string) => !!v || 'Required field',
   email: (v: string) => /.+@.+\..+/.test(v) || 'Please write a valid email!',
@@ -78,7 +80,7 @@ const handleSubmit = async () => {
       localStorage.setItem('token', response.data.access_token)
       router.push('/')
     } else {
-      console.error('Auth error:', response)
+      console.error('Auth error response:', response.data)
     }
   } catch (error: any) {
     console.error('Auth error:', error)
