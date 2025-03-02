@@ -2,11 +2,6 @@
   <v-card>
     <v-card-text>
       <div class="d-flex">
-        <v-checkbox
-          v-model="todo.completed"
-          @change="$emit('toggle-complete', todo.id)"
-        ></v-checkbox>
-
         <div class="flex-grow-1">
           <div class="d-flex">
             <span :class="{ 'text-decoration-line-through': todo.completed }">
@@ -24,6 +19,13 @@
         </div>
 
         <div class="ml-2">
+          <v-switch
+            v-model="todo.completed"
+            color="indigo"
+            :label="todo.completed ? 'Mark as Not Completed' : 'Mark as Completed'"
+            value="indigo"
+            hide-details
+          ></v-switch>
           <v-btn size="small" text="Edit" @click="$emit('edit', todo)" />
           <v-btn size="small" text="Delete" color="error" @click="$emit('delete', todo.id)" />
         </div>

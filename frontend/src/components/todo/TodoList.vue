@@ -28,6 +28,14 @@
             class="mr-2"
           ></v-select>
 
+          <v-text-field
+            v-model="filters.due_date"
+            label="Son Tarih"
+            type="date"
+            hide-details
+            class="mr-2"
+          ></v-text-field>
+
           <v-btn color="primary" @click="$emit('add')"> New Item </v-btn>
         </div>
       </v-card-text>
@@ -38,7 +46,7 @@
     </div>
 
     <div v-else-if="!filteredTodos.length" class="text-center">
-      <div class="text-h2 text-grey">TODO item could not be found!</div>
+      <div class="text-h3 text-grey">Could not be any TODO item found!</div>
     </div>
 
     <template v-else>
@@ -89,6 +97,7 @@ const filters = ref({
   search: '',
   group: null as number | null,
   priority: null as number | null,
+  due_date: null as string | null,
 })
 
 const filteredTodos = computed(() => {
@@ -104,6 +113,12 @@ const filteredTodos = computed(() => {
     }
     if (filters.value.priority && todo.priority !== filters.value.priority) {
       return false
+    }
+    if (filters.value.due_date) {
+      const todoDate = new Date(todo.due_date).toISOString().split('T')[0]
+      if (todoDate !== filters.value.due_date) {
+        return false
+      }
     }
     return true
   })
