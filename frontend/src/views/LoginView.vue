@@ -66,7 +66,7 @@ const toggleAuthMode = () => {
 }
 
 const handleSubmit = async () => {
-  if (!form.value?.validate()) return
+  //   if (!form.value?.validate()) return
 
   loading.value = true
   try {

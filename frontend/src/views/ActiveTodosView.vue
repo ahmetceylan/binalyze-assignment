@@ -28,11 +28,19 @@ import TodoForm from '@/components/todo/TodoForm.vue'
 import api from '@/services/api'
 import { useTodoStore } from '@/stores/todo'
 import { useGroupStore } from '@/stores/group'
+interface ITodo {
+  id?: number | undefined
+  title: string
+  priority: number
+  due_date: string
+  groupId?: number | null | undefined
+}
 
 const store = useTodoStore()
 const groupStore = useGroupStore()
 const showForm = ref(false)
-const selectedTodo = ref(null)
+const selectedTodo = ref<ITodo | null>(null)
+const form = ref<ITodo | null>(null)
 
 const fetchData = async () => {
   try {
@@ -48,19 +56,32 @@ const fetchData = async () => {
   }
 }
 
-const showTodoForm = (todo = null) => {
-  console.log('Selected Todo:', todo)
+const showTodoForm = (todo: ITodo | null = null) => {
   selectedTodo.value = todo
   showForm.value = true
 }
 
-const handleSave = async (todoData) => {
+const handleSave = async (todoData: ITodo) => {
   try {
     if (todoData.id) {
       const { id, ...formData } = todoData
-      await api.patch(`/todo-items/${id}`, formData)
+      const todoDataToSave: ITodo = {
+        id: id || 0,
+        title: formData.title,
+        priority: formData.priority,
+        groupId: formData.groupId || 0,
+        due_date: formData.due_date,
+      }
+      await api.patch(`/todo-items/${id}`, todoDataToSave)
     } else {
-      await api.post('/todo-items', todoData)
+      const todoDataToSave: ITodo = {
+        id: 0,
+        title: todoData.title,
+        priority: todoData.priority,
+        groupId: todoData.groupId || 0,
+        due_date: todoData.due_date,
+      }
+      await api.post('/todo-items', todoDataToSave)
     }
     fetchData()
   } catch (error) {
@@ -68,7 +89,7 @@ const handleSave = async (todoData) => {
   }
 }
 
-const handleDelete = async (id) => {
+const handleDelete = async (id: number) => {
   try {
     await api.delete(`/todo-items/${id}`)
     fetchData()
@@ -77,7 +98,7 @@ const handleDelete = async (id) => {
   }
 }
 
-const handleToggleComplete = async (id) => {
+const handleToggleComplete = async (id: number) => {
   console.log('AHMET handleToggleComplete: ', id)
   try {
     await api.patch(`/todo-items/${id}/toggle-complete`)

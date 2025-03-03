@@ -30,7 +30,7 @@ const fetchData = async () => {
   }
 }
 
-const handleDelete = async (id) => {
+const handleDelete = async (id: number) => {
   try {
     await api.delete(`/todo-items/${id}`)
     store.fetchTodos(true)
@@ -39,7 +39,7 @@ const handleDelete = async (id) => {
   }
 }
 
-const handleToggleComplete = async (id) => {
+const handleToggleComplete = async (id: number) => {
   try {
     await api.patch(`/todo-items/${id}/toggle-complete`)
     store.fetchTodos(true)

@@ -73,8 +73,16 @@ const store = useTodoStore()
 const groupStore = useGroupStore()
 const showForm = ref(false)
 const formLoading = ref(false)
-const selectedGroup = ref(null)
+const selectedGroup = ref<InputGroup | null>(null)
 const form = ref(null)
+interface InputGroup {
+  group_id: number
+  group_name: string
+  group_created_at: string
+  group_updated_at: string
+  group_userId: number
+  todocount: string
+}
 
 const formData = reactive({
   name: '',
@@ -84,7 +92,7 @@ const rules = {
   required: (v: any) => !!v || 'Bu alan zorunludur',
 }
 
-const showGroupForm = (group = null) => {
+const showGroupForm = (group: InputGroup | null = null) => {
   selectedGroup.value = group
   if (group) {
     formData.name = group.group_name
@@ -101,7 +109,7 @@ const closeForm = () => {
 }
 
 const handleSubmit = async () => {
-  if (!form.value?.validate()) return
+  //   if (!form.value?.validate()) return
 
   formLoading.value = true
   try {
@@ -116,7 +124,7 @@ const handleSubmit = async () => {
   }
 }
 
-const handleDelete = async (groupId: string) => {
+const handleDelete = async (groupId: number) => {
   await groupStore.deleteGroup(groupId)
 }
 

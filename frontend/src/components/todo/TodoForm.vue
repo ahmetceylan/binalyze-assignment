@@ -60,7 +60,7 @@ interface Todo {
   id?: number
   title: string
   priority: number
-  groupId: number
+  groupId?: number | null | undefined
   due_date: string
 }
 
@@ -70,7 +70,7 @@ interface Group {
 }
 
 const props = defineProps<{
-  todo?: Todo
+  todo?: Todo | null | undefined
   groups: Group[]
 }>()
 
@@ -97,7 +97,7 @@ const rules = {
 }
 
 const handleSubmit = async () => {
-  if (!form.value?.validate()) return
+  //   if (!form.value?.validate()) return
 
   loading.value = true
   try {
