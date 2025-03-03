@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "84477793-a739-483e-a841-5e79dc604e98",
+		"name": "Binalyze",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2063002"
+	},
+	"item": [
+		{
+			"name": "Auth Requests",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ahmet@test.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ahmet@test.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group Requests",
+			"item": [
+				{
+					"name": "Get all todo groups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA5NDgzOTYsImV4cCI6MTc0MTAzNDc5Nn0.5F5rBCZ4ijgz-ygcG6W3NkVjS6Iyr_ykBrqIH8BNMvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/todo-groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create new todo group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/todo-groups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update todo group by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"new_test2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/todo-groups/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-groups",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete todo group by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/todo-groups/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-groups",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get todo group by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/todo-groups/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-groups",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Todo Item Requests",
+			"item": [
+				{
+					"name": "Get all todo items",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA5MjE1NjksImV4cCI6MTc0MTAwNzk2OX0.w9XocZjNrpNJkcyBBqtU0o50QyyWOhUyn-VmOnUUbmY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/todo-items?completed=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-items"
+							],
+							"query": [
+								{
+									"key": "completed",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create new todo item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"todo title4\",\n    \"priority\": 1,\n    \"due_date\": \"2025-03-02T14:49:07.276Z\",\n    \"groupId\": 1\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/todo-items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update todo item by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"todo title2\",\n    \"description\": \"doto description2\",\n    \"priority\": 4,\n    \"due_date\": \"2025-03-03T14:49:07.276Z\",\n    \"groupId\": 1,\n    \"completed\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/todo-items/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-items",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "toggle todo item completed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/todo-items/1/toggle-complete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-items",
+								"1",
+								"toggle-complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete todo item by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/todo-items/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-items",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get todo item by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhtZXRAdGVzdC5jb20iLCJpYXQiOjE3NDA4NTk1OTIsImV4cCI6MTc0MDk0NTk5Mn0.O-jT0iamWC2IOE_5QQQ8jOpe0jBkVgrSjo6aRYP8i_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/todo-items/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"todo-items",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
