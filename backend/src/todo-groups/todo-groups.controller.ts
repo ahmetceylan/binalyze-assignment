@@ -12,7 +12,7 @@ import {
 import { TodoGroupsService } from './todo-groups.service';
 import { CreateTodoGroupDto } from './dtos/create-todo-group.dto';
 import { UpdateTodoGroupDto } from './dtos/update-todo-group.dto';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';

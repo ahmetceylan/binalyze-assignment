@@ -23,12 +23,13 @@ export class AuthService {
       this.logger.warn(`Login:email could not be found: ${loginUserDto.email}`);
       throw new UnauthorizedException('Invalid credentials');
     }
-
+    console.log('AHMET user: ', user.password);
+    console.log('AHMET loginUserDto: ', loginUserDto.password);
     const isPasswordValid = await bcrypt.compare(
       loginUserDto.password,
       user.password,
     );
-
+    console.log('AHMET isPasswordValid: ', isPasswordValid);
     if (!isPasswordValid) {
       this.logger.warn(`Invalid password for email: ${loginUserDto.email}`);
       throw new UnauthorizedException('Invalid credentials');
